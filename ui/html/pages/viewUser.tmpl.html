@@ -1,0 +1,27 @@
+{{define "title"}}Users List{{end}}
+{{define "main"}}
+<h2>Users List > You're <u>{{ .CurrentUser }}</u></h2>
+{{if .Userss}} <!--- userss disini menggunakan variabel yang ada dalam templatedata -->
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Created</th>
+        <th>ID</th>
+        <th colspan="2">Action</th>
+    </tr>
+{{range .Userss}}
+        <tr>
+            <td><a href='/snippet/UsersEditPage/{{.ID}}'>{{.Name}}</a></td>
+            <td>{{.Email}}</a></td>
+            <td>{{humanDate .Created}}</td>
+            <td>#{{.ID}}</td>
+            <td><a href='/snippet/UsersEditPage/{{.ID}}'>Edit</a></td>
+
+        </tr>
+{{end}}
+</table>
+{{else}}
+<p>There's nothing to see here... yet!</p>
+{{end}}
+{{end}}

@@ -1,0 +1,53 @@
+{{define "title"}}Snippet #{{ .Snippet.ID}}{{end}}
+{{define "main"}}
+
+<form action="/snippet/UpdateSnippets/{{ .Snippet.ID }}" method="post">
+    <input type='hidden' name='csrf_token' value='{{.CSRFToken}}'>
+
+<span>#{{.Snippet.ID}}</span>
+<div>
+<input type="hidden" name="id" value="{{ .Snippet.ID }}">
+
+<div class="mb-3">
+    <label class="form-label">Title:</label>
+    <input type="text" class="form-control" name='title' value="{{ .Form.Title}}">
+  </div>
+{{with .Form.FieldErrors.title}}
+<label class='error'>{{.}}</label>
+{{end}} 
+</div>
+
+<div>
+    {{with .Form.FieldErrors.content}}
+<label class='error'>{{.}}</label>
+{{end}}
+<div class="mb-3">
+    <label class="form-label">Content:</label>
+    <textarea class="form-control" name='content'>{{.Form.Content}}</textarea>
+  </div>
+</div>
+
+
+{{ with .Snippet }}
+<div class="mb-3">
+    <label class="form-label">Expired at: {{ humanDate  .Expires}}</label>
+
+    <select name='expires' class="form-select" aria-label="Default select example">
+        <option value='365'  selected>Nothing change</option>
+        <option value='365'> Add 1 Year</option>
+        <option value='7'>Add 1 Week</option>
+        <option value='1'>Add 1 Day</option>
+      </select>
+      <p class="fst-italic">Choose if you want to Add more time to Expired</p>
+  </div>
+</div>
+
+{{ end }}
+
+
+<input type='hidden' name='AuthorName' value='{{.CurrentUser}}'>
+<input type='submit' value='Update snippet'>
+
+</form>
+
+{{end}}
